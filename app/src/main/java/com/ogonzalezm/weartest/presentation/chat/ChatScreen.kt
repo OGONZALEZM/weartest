@@ -1,6 +1,5 @@
 package com.ogonzalezm.weartest.presentation.chat
 
-import android.view.KeyEvent
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,6 +13,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -30,7 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
@@ -178,6 +178,7 @@ fun Form(
     onAction: (ChatIntent) -> Unit
 ) {
     var text by remember { mutableStateOf("") }
+    val controller = LocalSoftwareKeyboardController.current
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Bottom,
@@ -186,34 +187,30 @@ fun Form(
         Spacer(modifier = Modifier.weight(1f))
         TextField(modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp)
-            .onKeyEvent {
-                if (it.nativeKeyEvent.keyCode == KeyEvent.KEYCODE_ENTER) {
-                    onAction(ChatIntent.AddMessage(text))
-                    true
-                } else {
-                    false
-                }
-            },
+            .padding(horizontal = 20.dp),
             value = text,
-            maxLines = 1,
+            maxLines = 2,
             colors = TextFieldDefaults.colors(
                 unfocusedContainerColor = Color.DarkGray,
-                focusedContainerColor = Color.DarkGray
+                focusedContainerColor = Color.DarkGray,
+                focusedTextColor = Color.White,
+                unfocusedTextColor = Color.White
             ),
+            textStyle = ChatBotTextStyle.body,
             onValueChange = { newText ->
                 text = newText
             },
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(
                 onDone = {
-                    onAction(ChatIntent.AddMessage(text))
+                    controller?.hide()
                 }
             ))
         Spacer(modifier = Modifier.height(10.dp))
         Button(onClick = { onAction(ChatIntent.AddMessage(text)) }) {
-            Text(text = stringResource(id = R.string.send_message),
-                color = Color.White)
+            Icon(imageVector = Icons.AutoMirrored.Filled.Send,
+                tint = Color.White,
+                contentDescription = stringResource(id = R.string.send_message))
         }
         Spacer(modifier = Modifier.height(16.dp))
     }
