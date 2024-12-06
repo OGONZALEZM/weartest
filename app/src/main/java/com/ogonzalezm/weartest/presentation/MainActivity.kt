@@ -9,7 +9,7 @@ package com.ogonzalezm.weartest.presentation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,13 +21,21 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.TimeText
 import com.ogonzalezm.weartest.R
+import com.ogonzalezm.weartest.presentation.chat.ChatScreen
+import com.ogonzalezm.weartest.presentation.chat.ChatViewModel
 import com.ogonzalezm.weartest.presentation.theme.WearTestTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    private val viewModel by viewModels<ChatViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
 
@@ -36,7 +44,7 @@ class MainActivity : ComponentActivity() {
         setTheme(android.R.style.Theme_DeviceDefault)
 
         setContent {
-            WearApp("Android")
+            ChatScreen(viewModel = viewModel)
         }
     }
 }
@@ -51,7 +59,6 @@ fun WearApp(greetingName: String) {
             contentAlignment = Alignment.Center
         ) {
             TimeText()
-            Greeting(greetingName = greetingName)
         }
     }
 }

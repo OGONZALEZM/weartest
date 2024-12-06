@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="responses">
+        <item>No tengo la información necesaria en este momento, lo siento.</item>
+        <item>Lamentablemente, no puedo responder a eso.</item>
+        <item>No estoy seguro, pero intentaré ayudarte de otra manera.</item>
+        <item>Lo siento, no tengo esa respuesta disponible.</item>
+        <item>No estoy completamente seguro sobre eso, perdón.</item>
+        <item>No puedo asegurarte una respuesta precisa, lo siento.</item>
+        <item>Lamentablemente, no tengo suficiente información para responder.</item>
+        <item>Eso está fuera de mi alcance, lo siento.</item>
+        <item>No estoy seguro de cómo responder a eso en este momento.</item>
+        <item>Lo siento, no tengo una respuesta clara para eso ahora.</item>
+    </array>
+</resources>

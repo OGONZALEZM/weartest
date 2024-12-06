@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.hilt)
+    id("kotlin-kapt")
 }
 
 android {
@@ -46,6 +48,9 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    //kamp {
+    //    correctErrorTypes = true
+    //}
 }
 
 dependencies {
@@ -58,8 +63,18 @@ dependencies {
     implementation(libs.compose.foundation)
     implementation(libs.activity.compose)
     implementation(libs.core.splashscreen)
+    implementation(libs.material3.android)
     androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
+
+    // ViewModel
+    implementation (libs.lifecycle.viewmodel.compose)
+
+    // Hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
+
+
 }
